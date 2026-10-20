@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu & Pricelist | Maison Dorée</title>
+  <meta name="description" content="Pricelist eksklusif Maison Dorée - Fine dining experience dengan cita rasa premium." />
+  <meta name="theme-color" content="#0d0d0d" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Italiana&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* =============================================
+       VARIABEL TEMA
+       ============================================= */
+    :root {
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-theme: 0.4s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0d0d0d;
+      --bg-elevated: #151515;
+      --bg-soft: #1c1c1c;
+      --bg-header: rgba(13, 13, 13, 0.92);
+      --card: #161616;
+      --card-hover: #1d1d1d;
+      --gold: #d4af37;
+      --gold-soft: #b8941f;
+      --gold-bright: #f0d265;
+      --gold-contrast: #0d0d0d;
+      --text: #eaeaea;
+      --text-heading: #ffffff;
+      --muted: #8a8a8a;
+      --muted-strong: #b5b5b5;
+      --border: rgba(212, 175, 55, 0.18);
+      --border-strong: rgba(212, 175, 55, 0.45);
+      --divider: rgba(212, 175, 55, 0.12);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      --shadow-gold: 0 8px 24px rgba(212, 175, 55, 0.28);
+      --hero-gradient: linear-gradient(135deg, #ffffff 20%, #d4af37 90%);
+      --glow: rgba(212, 175, 55, 0.1);
+      --badge-bg: linear-gradient(135deg, #d4af37, #b8941f);
+      --badge-text: #0d0d0d;
+      --overlay: rgba(0, 0, 0, 0.7);
+      --scrollbar-track: #151515;
+      --scrollbar-thumb: #d4af37;
+    }
+
+    [data-theme="light"] {
+      --bg: #f7f3ec;
+      --bg-elevated: #fdfaf4;
+      --bg-soft: #f0eadd;
+      --bg-header: rgba(247, 243, 236, 0.94);
+      --card: #ffffff;
+      --card-hover: #fffdf8;
+      --gold: #8b6f1f;
+      --gold-soft: #a6841f;
+      --gold-bright: #6d5718;
+      --gold-contrast: #ffffff;
+      --text: #1d1b16;
+      --text-heading: #0d0d0d;
+      --muted: #6a6a6a;
+      --muted-strong: #444;
+      --border: rgba(139, 111, 31, 0.22);
+      --border-strong: rgba(139, 111, 31, 0.5);
+      --divider: rgba(139, 111, 31, 0.15);
+      --shadow: 0 20px 50px rgba(60, 40, 0, 0.12);
+      --shadow-gold: 0 8px 24px rgba(139, 111, 31, 0.25);
+      --hero-gradient: linear-gradient(135deg, #0d0d0d 0%, #8b6f1f 100%);
+      --glow: rgba(139, 111, 31, 0.08);
+      --badge-bg: linear-gradient(135deg, #8b6f1f, #d4af37);
+      --badge-text: #ffffff;
+      --overlay: rgba(255, 255, 255, 0.7);
+      --scrollbar-track: #f0eadd;
+      --scrollbar-thumb: #8b6f1f;
+    }
+
+    /* =============================================
+       RESET
+       ============================================= */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background var(--transition-theme),
+                  color var(--transition-theme);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 0%, var(--glow), transparent 50%),
+        radial-gradient(ellipse at 80% 100%, var(--glow), transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+      transition: background var(--transition-theme);
+    }
+
+    img { max-width: 100%; display: block; }
+    button, input, select { font-family: inherit; }
+
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border-radius: 10px;
+    }
+
+    /* =============================================
+       TOP BAR (Multi-fungsi)
+       ============================================= */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: var(--bg-header);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition-theme),
+                  border-color var(--transition-theme),
+                  transform var(--transition);
+    }
+
+    .top-bar.hidden {
+      transform: translateY(-100%);
+    }
+
+    .top-bar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    /* Brand */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: "Italiana", serif;
+      font-size: 1.25rem;
+      color: var(--gold);
+      transition: transform var(--transition), border-color var(--transition-theme);
+    }
+
+    .brand:hover .brand-mark {
+      transform: rotate(-15deg);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-family: "Italiana", serif;
+      font-size: 1.35rem;
+      letter-spacing: 2px;
+      color: var(--text-heading);
+      transition: color var(--transition-theme);
+    }
+
+    .brand-tag {
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 3px;
+      transition: color var(--transition-theme);
+    }
+
+    /* Nav Links */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: var(--muted-strong);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: color var(--transition);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* Tools */
+    .tools {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      position: relative;
+      transition: all var(--transition);
+    }
+
+    .icon-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Cart button dengan badge */
+    .cart-btn {
+      background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+      border-color: transparent;
+      color: var(--gold-contrast);
+    }
+
+    .cart-btn:hover {
+      color: var(--gold-contrast);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .cart-btn svg { stroke: var(--gold-contrast); }
+
+    .cart-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #e74c3c;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 100px;
+      display: grid;
+      place-items: center;
+      transform: scale(0);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .cart-count.active { transform: scale(1); }
+
+    /* Hamburger mobile */
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* =============================================
+       HERO EDITORIAL
+       ============================================= */
+    .hero {
+      padding: 10rem 2rem 5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-left { position: relative; }
+
+    .hero-kicker {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .hero-kicker::before {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 1.5rem;
+      color: var(--text-heading);
+      transition: color var(--transition-theme);
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      background: var(--hero-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted-strong);
+      max-width: 460px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+      transition: color var(--transition-theme);
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--divider);
+    }
+
+    .hero-meta-item h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      transition: color var(--transition-theme);
+    }
+
+    .hero-meta-item p {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color var(--transition-theme);
+    }
+
+    /* Hero Right - Editorial Image Grid */
+    .hero-right {
+      position: relative;
+      height: 550px;
+    }
+
+    .hero-img {
+      position: absolute;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-img-1 {
+      width: 60%;
+      height: 65%;
+      top: 0;
+      right: 0;
+      z-index: 2;
+    }
+
+    .hero-img-2 {
+      width: 55%;
+      height: 55%;
+      bottom: 0;
+      left: 0;
+      z-index: 3;
+      border: 4px solid var(--bg);
+      transition: border-color var(--transition-theme);
+    }
+
+    .hero-img-3 {
+      width: 35%;
+      height: 40%;
+      bottom: 10%;
+      right: 5%;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: 45%;
+      left: 15%;
+      z-index: 4;
+      background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+      color: var(--gold-contrast);
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      box-shadow: var(--shadow-gold);
+      animation: floatY 4s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* =============================================
+       TOOLBAR (Cari, Filter, Tampilan)
+       ============================================= */
+    .toolbar {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem 2rem;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .search-wrap {
+      position: relative;
+      max-width: 380px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: var(--muted);
+      stroke-width: 2;
+      pointer-events: none;
+      transition: stroke var(--transition-theme);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text);
+      font-size: 0.88rem;
+      outline: none;
+      transition: all var(--transition-theme);
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--glow);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: var(--bg-elevated);
+      padding: 0.35rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      transition: background var(--transition-theme),
+                  border-color var(--transition-theme);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-tabs::-webkit-scrollbar { display: none; }
+
+    .filter-btn {
+      padding: 0.55rem 1.1rem;
+      border-radius: 100px;
+      background: transparent;
+      border: none;
+      color: var(--muted-strong);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--transition);
+    }
+
+    .filter-btn:hover { color: var(--gold); }
+
+    .filter-btn.active {
+      background: var(--gold);
+      color: var(--gold-contrast);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 0.25rem;
+      background: var(--bg-elevated);
+      padding: 0.35rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      transition: background var(--transition-theme),
+                  border-color var(--transition-theme);
+    }
+
+    .view-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all var(--transition);
+    }
+
+    .view-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .view-btn:hover { color: var(--gold); }
+    .view-btn.active {
+      background: var(--gold);
+      color: var(--gold-contrast);
+    }
+
+    /* =============================================
+       MENU AREA
+       ============================================= */
+    .menu-area {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Kategori header */
+    .category-block {
+      margin-bottom: 4rem;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 1.25rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--divider);
+      position: relative;
+      transition: border-color var(--transition-theme);
+    }
+
+    .category-header::before {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 60px;
+      height: 2px;
+      background: var(--gold);
+      transition: background var(--transition-theme);
+    }
+
+    .category-title-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .category-number {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 0.9rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      transition: color var(--transition-theme);
+    }
+
+    .category-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 600;
+      color: var(--text-heading);
+      line-height: 1;
+      letter-spacing: -0.5px;
+      transition: color var(--transition-theme);
+    }
+
+    .category-count {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color var(--transition-theme);
+    }
+
+    /* =============================================
+       GRID VIEW
+       ============================================= */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .menu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: all var(--transition);
+    }
+
+    .menu-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow);
+      background: var(--card-hover);
+    }
+
+    .card-img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-soft);
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .menu-card:hover .card-img img {
+      transform: scale(1.08);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      padding: 0.3rem 0.85rem;
+      border-radius: 100px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: all var(--transition-theme);
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.6rem;
+    }
+
+    .card-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-heading);
+      line-height: 1.2;
+      transition: color var(--transition-theme);
+    }
+
+    .card-desc {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+      transition: color var(--transition-theme);
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.6rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--divider);
+      transition: border-color var(--transition-theme);
+    }
+
+    .card-price {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      transition: color var(--transition-theme);
+    }
+
+    .card-price small {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+      font-family: "Inter", sans-serif;
+    }
+
+    .add-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all var(--transition);
+    }
+
+    .add-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+    }
+
+    .add-btn:hover {
+      background: var(--gold);
+      color: var(--gold-contrast);
+      transform: scale(1.1) rotate(90deg);
+    }
+
+    /* =============================================
+       LIST VIEW
+       ============================================= */
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .list-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 1.25rem;
+      padding: 1rem;
+      align-items: center;
+      transition: all var(--transition);
+    }
+
+    .list-item:hover {
+      border-color: var(--gold);
+      background: var(--card-hover);
+      transform: translateX(6px);
+    }
+
+    .list-img {
+      width: 90px;
+      height: 90px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-soft);
+    }
+
+    .list-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .list-info h4 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-heading);
+      margin-bottom: 0.2rem;
+      transition: color var(--transition-theme);
+    }
+
+    .list-info p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: color var(--transition-theme);
+    }
+
+    .list-action {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .list-price {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold);
+      transition: color var(--transition-theme);
+    }
+
+    .list-add-btn {
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      border: 1px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .list-add-btn:hover {
+      background: var(--gold);
+      color: var(--gold-contrast);
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+    }
+
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1rem;
+      opacity: 0.4;
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1.5;
+    }
+
+    .empty-state p {
+      font-size: 0.95rem;
+    }
+
+    /* =============================================
+       CART DRAWER
+       ============================================= */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--overlay);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition);
+      z-index: 300;
+    }
+
+    .cart-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-elevated);
+      border-left: 1px solid var(--border);
+      z-index: 301;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform var(--transition),
+                  background var(--transition-theme),
+                  border-color var(--transition-theme);
+    }
+
+    .cart-drawer.open {
+      transform: translateX(0);
+    }
+
+    .cart-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--divider);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color var(--transition-theme);
+    }
+
+    .cart-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.5rem;
+      color: var(--text-heading);
+      transition: color var(--transition-theme);
+    }
+
+    .cart-title small {
+      font-family: "Inter", sans-serif;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: block;
+      margin-top: 2px;
+      transition: color var(--transition-theme);
+    }
+
+    .close-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      transition: all var(--transition);
+    }
+
+    .close-btn:hover {
+      border-color: #e74c3c;
+      color: #e74c3c;
+      transform: rotate(90deg);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.5rem;
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .cart-empty svg {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1rem;
+      opacity: 0.4;
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 1.5;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      gap: 0.9rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--divider);
+      align-items: center;
+      animation: slideIn 0.3s ease;
+      transition: border-color var(--transition-theme);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .cart-item-img {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-soft);
+    }
+
+    .cart-item-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cart-item-info h5 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.05rem;
+      color: var(--text-heading);
+      margin-bottom: 0.15rem;
+      transition: color var(--transition-theme);
+    }
+
+    .cart-item-price {
+      font-size: 0.82rem;
+      color: var(--gold);
+      font-weight: 600;
+      transition: color var(--transition-theme);
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.2rem;
+      transition: border-color var(--transition-theme);
+    }
+
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+      font-size: 1rem;
+      display: grid;
+      place-items: center;
+      transition: all var(--transition);
+    }
+
+    .qty-btn:hover {
+      background: var(--gold);
+      color: var(--gold-contrast);
+    }
+
+    .qty-num {
+      font-size: 0.85rem;
+      font-weight: 600;
+      min-width: 20px;
+      text-align: center;
+      color: var(--text);
+      transition: color var(--transition-theme);
+    }
+
+    .cart-footer {
+      padding: 1.5rem;
+      border-top: 1px solid var(--divider);
+      background: var(--bg);
+      transition: background var(--transition-theme),
+                  border-color var(--transition-theme);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.25rem;
+    }
+
+    .cart-total-label {
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color var(--transition-theme);
+    }
+
+    .cart-total-value {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--gold);
+      transition: color var(--transition-theme);
+    }
+
+    .checkout-btn {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 100px;
+      border: none;
+      background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+      color: var(--gold-contrast);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-gold);
+    }
+
+    .checkout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(212, 175, 55, 0.45);
+    }
+
+    .checkout-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .checkout-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* =============================================
+       FOOTER
+       ============================================= */
+    footer {
+      border-top: 1px solid var(--divider);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      transition: border-color var(--transition-theme);
+    }
+
+    .footer-brand {
+      font-family: "Italiana", serif;
+      font-size: 1.6rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      transition: color var(--transition-theme);
+    }
+
+    .footer-tag {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      transition: color var(--transition-theme);
+    }
+
+    .footer-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: color var(--transition-theme);
+    }
+
+    .footer-meta span {
+      color: var(--gold);
+      transition: color var(--transition-theme);
+    }
+
+    /* =============================================
+       RESPONSIVE
+       ============================================= */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 8rem 1.5rem 3rem;
+        gap: 3rem;
+      }
+      .hero-right {
+        height: 400px;
+        max-width: 500px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+    }
+
+    @media (max-width: 768px) {
+      .top-bar-inner { padding: 0.8rem 1.2rem; }
+      .brand-name { font-size: 1.1rem; }
+      .brand-tag { font-size: 0.55rem; }
+      .brand-mark { width: 34px; height: 34px; font-size: 1rem; }
+
+      .hero { padding: 7rem 1.2rem 2rem; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero-meta { gap: 1.5rem; padding-top: 1.5rem; }
+      .hero-meta-item h3 { font-size: 1.6rem; }
+      .hero-right { height: 320px; }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+        padding: 0 1.2rem 1.5rem;
+        gap: 0.85rem;
+      }
+      .search-wrap { max-width: 100%; }
+      .filter-tabs {
+        justify-content: flex-start;
+      }
+      .view-toggle { justify-self: end; }
+
+      .menu-area { padding: 0 1.2rem 3rem; }
+      .category-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .list-item {
+        grid-template-columns: 70px 1fr;
+        gap: 0.9rem;
+      }
+      .list-action {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .hero-badge {
+        top: 40%;
+        left: 5%;
+        font-size: 0.6rem;
+        padding: 0.5rem 1rem;
+      }
+    }
+
+    /* =============================================
+       PRINT
+       ============================================= */
+    @media print {
+      :root, [data-theme="dark"], [data-theme="light"] {
+        --bg: #fff;
+        --card: #fff;
+        --bg-soft: #fff;
+        --bg-elevated: #fff;
+        --text: #000;
+        --text-heading: #000;
+        --muted: #555;
+        --muted-strong: #333;
+        --gold: #8b6f1f;
+        --border: #ddd;
+        --divider: #ddd;
+        --shadow: none;
+        --shadow-gold: none;
+      }
+      body { background: #fff !important; color: #000 !important; }
+      body::before, .top-bar, .hero-right, .toolbar,
+      .cart-drawer, .cart-overlay, .add-btn, .list-add-btn,
+      .view-toggle, .filter-tabs, .mobile-toggle { display: none !important; }
+
+      .hero {
+        padding: 1rem 0;
+        grid-template-columns: 1fr;
+      }
+      .hero h1 { font-size: 2rem; }
+      .hero h1 em { -webkit-text-fill-color: #8b6f1f; color: #8b6f1f; }
+      .hero-desc { color: #333 !important; }
+      .hero-meta { border-top-color: #ddd; }
+
+      .menu-area { padding: 0; max-width: 100%; }
+      .category-block { page-break-inside: avoid; margin-bottom: 1.5rem; }
+      .category-header { border-bottom-color: #ddd; }
+      .category-header::before { background: #8b6f1f; }
+      .category-title { color: #000 !important; font-size: 1.4rem; }
+      .category-number { color: #8b6f1f !important; }
+      .category-count { color: #666 !important; }
+
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+      }
+      .menu-card {
+        border: 1px solid #ddd;
+        box-shadow: none !important;
+        transform: none !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .card-img { display: none; }
+      .card-badge { display: none; }
+      .card-body { padding: 0.6rem 0.75rem; }
+      .card-title { font-size: 0.9rem; color: #000 !important; }
+      .card-desc { font-size: 0.7rem; color: #666 !important; }
+      .card-footer { border-top-color: #ddd; padding-top: 0.4rem; }
+      .card-price { color: #8b6f1f !important; font-size: 1rem; }
+      .card-price small { color: #666 !important; }
+
+      .menu-list { display: none; }
+
+      footer { border-top-color: #ddd; padding: 1rem; }
+      .footer-brand { color: #8b6f1f !important; font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ TOP BAR ============ -->
+  <div class="top-bar" id="topBar">
+    <div class="top-bar-inner">
+      <a href="#" class="brand" style="text-decoration:none;">
+        <div class="brand-mark">M</div>
+        <div class="brand-text">
+          <span class="brand-name">MAISON DORÉE</span>
+          <span class="brand-tag">Fine Dining · Est. 2015</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#appetizer">Appetizer</a></li>
+        <li><a href="#main">Main Course</a></li>
+        <li><a href="#dessert">Dessert</a></li>
+        <li><a href="#beverage">Beverage</a></li>
+      </ul>
+
+      <div class="tools">
+        <button class="icon-btn" id="themeToggle" aria-label="Ganti tema" title="Ganti tema">
+          <svg id="themeIcon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="printBtn" aria-label="Cetak" title="Cetak / Simpan PDF">
+          <svg viewBox="0 0 24 24">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+        </button>
+        <button class="icon-btn cart-btn" id="cartBtn" aria-label="Keranjang">
+          <svg viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-kicker">Menu Collection · 2025</div>
+      <h1>Cita rasa<br /><em>yang bercerita.</em></h1>
+      <p class="hero-desc">
+        Setiap hidangan adalah karya seni kuliner. Dibuat dengan bahan terbaik,
+        disajikan dengan penuh dedikasi untuk pengalaman bersantap yang tak terlupakan.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <h3>16</h3>
+          <p>Signature Dish</p>
+        </div>
+        <div class="hero-meta-item">
+          <h3>4</h3>
+          <p>Kategori</p>
+        </div>
+        <div class="hero-meta-item">
+          <h3>★ 4.9</h3>
+          <p>Rating Tamu</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img hero-img-1">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80" alt="Signature Steak" loading="lazy" />
+      </div>
+      <div class="hero-img hero-img-2">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Fine dining" loading="lazy" />
+      </div>
+      <div class="hero-img hero-img-3">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Plating" loading="lazy" />
+      </div>
+      <div class="hero-badge">Signature</div>
+    </div>
+  </section>
+
+  <!-- ============ TOOLBAR ============ -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="Cari menu favorit Anda..." />
+    </div>
+
+    <div class="filter-tabs" id="filterTabs">
+      <button class="filter-btn active" data-filter="all">Semua</button>
+      <button class="filter-btn" data-filter="appetizer">Appetizer</button>
+      <button class="filter-btn" data-filter="main">Main Course</button>
+      <button class="filter-btn" data-filter="dessert">Dessert</button>
+      <button class="filter-btn" data-filter="beverage">Beverage</button>
+    </div>
+
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="grid" aria-label="Grid view">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </button>
+      <button class="view-btn" data-view="list" aria-label="List view">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="4" rx="1"/><rect x="3" y="10" width="18" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ MENU AREA ============ -->
+  <div class="menu-area" id="menuArea">
+
+    <!-- APPETIZER -->
+    <section class="category-block" data-category="appetizer" id="appetizer">
+      <div class="category-header">
+        <div class="category-title-wrap">
+          <span class="category-number">01 /</span>
+          <h2 class="category-title">Appetizer</h2>
+        </div>
+        <span class="category-count">4 items</span>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-card" data-name="caesar salad" data-category="appetizer">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=600&q=80" alt="Caesar Salad" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Caesar Salad</h3>
+            <p class="card-desc">Romaine lettuce, ayam panggang, parmesan, crouton, dan dressing klasik.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 48.000</span>
+              <button class="add-btn" data-name="Caesar Salad" data-price="48000" data-img="https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="bruschetta" data-category="appetizer">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=600&q=80" alt="Bruschetta" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Bruschetta al Pomodoro</h3>
+            <p class="card-desc">Roti baguette panggang dengan tomat segar, basil, dan minyak zaitun.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 38.000</span>
+              <button class="add-btn" data-name="Bruschetta al Pomodoro" data-price="38000" data-img="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="truffle fries" data-category="appetizer">
+          <div class="card-img">
+            <span class="card-badge">Chef's Pick</span>
+            <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&q=80" alt="Truffle Fries" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Truffle Fries</h3>
+            <p class="card-desc">Kentang goreng renyah dengan minyak truffle, parmesan, dan rosemary.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 52.000</span>
+              <button class="add-btn" data-name="Truffle Fries" data-price="52000" data-img="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="shrimp cocktail" data-category="appetizer">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=600&q=80" alt="Shrimp Cocktail" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Shrimp Cocktail</h3>
+            <p class="card-desc">Udang segar dengan saus cocktail, lemon, dan selada iceberg.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 65.000</span>
+              <button class="add-btn" data-name="Shrimp Cocktail" data-price="65000" data-img="https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- MAIN COURSE -->
+    <section class="category-block" data-category="main" id="main">
+      <div class="category-header">
+        <div class="category-title-wrap">
+          <span class="category-number">02 /</span>
+          <h2 class="category-title">Main Course</h2>
+        </div>
+        <span class="category-count">5 items</span>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-card" data-name="wagyu steak" data-category="main">
+          <div class="card-img">
+            <span class="card-badge">Signature</span>
+            <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&q=80" alt="Wagyu Steak" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Wagyu Ribeye Steak</h3>
+            <p class="card-desc">Wagyu A5 dengan saus red wine, asparagus, dan mashed potato.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 385.000</span>
+              <button class="add-btn" data-name="Wagyu Ribeye Steak" data-price="385000" data-img="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="salmon" data-category="main">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80" alt="Grilled Salmon" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Grilled Salmon</h3>
+            <p class="card-desc">Salmon Norwegia dengan lemon butter, quinoa, dan brokoli.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 165.000</span>
+              <button class="add-btn" data-name="Grilled Salmon" data-price="165000" data-img="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="truffle pasta" data-category="main">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80" alt="Truffle Pasta" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Truffle Mushroom Pasta</h3>
+            <p class="card-desc">Fettuccine dengan saus krim truffle dan jamur portobello.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 125.000</span>
+              <button class="add-btn" data-name="Truffle Mushroom Pasta" data-price="125000" data-img="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="duck confit" data-category="main">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=600&q=80" alt="Duck Confit" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Duck Confit</h3>
+            <p class="card-desc">Bebek panggang lambat dengan saus orange, kentang, dan sayuran.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 175.000</span>
+              <button class="add-btn" data-name="Duck Confit" data-price="175000" data-img="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="risotto" data-category="main">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600&q=80" alt="Risotto" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Mushroom Risotto</h3>
+            <p class="card-desc">Risotto creamy dengan jamur, parmesan, dan truffle oil.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 95.000</span>
+              <button class="add-btn" data-name="Mushroom Risotto" data-price="95000" data-img="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- DESSERT -->
+    <section class="category-block" data-category="dessert" id="dessert">
+      <div class="category-header">
+        <div class="category-title-wrap">
+          <span class="category-number">03 /</span>
+          <h2 class="category-title">Dessert</h2>
+        </div>
+        <span class="category-count">4 items</span>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-card" data-name="tiramisu" data-category="dessert">
+          <div class="card-img">
+            <span class="card-badge">Best Seller</span>
+            <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80" alt="Tiramisu" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Classic Tiramisu</h3>
+            <p class="card-desc">Mascarpone, espresso, ladyfinger, dan bubuk kakao Italia.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 68.000</span>
+              <button class="add-btn" data-name="Classic Tiramisu" data-price="68000" data-img="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="creme brulee" data-category="dessert">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80" alt="Creme Brulee" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Crème Brûlée</h3>
+            <p class="card-desc">Custard vanila lembut dengan lapisan karamel renyah.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 58.000</span>
+              <button class="add-btn" data-name="Crème Brûlée" data-price="58000" data-img="https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="lava cake" data-category="dessert">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80" alt="Lava Cake" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Chocolate Lava Cake</h3>
+            <p class="card-desc">Kue cokelat hangat dengan lelehan cokelat Belgia.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 62.000</span>
+              <button class="add-btn" data-name="Chocolate Lava Cake" data-price="62000" data-img="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="panna cotta" data-category="dessert">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" alt="Panna Cotta" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Panna Cotta Berry</h3>
+            <p class="card-desc">Panna cotta lembut dengan saus berry segar.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 52.000</span>
+              <button class="add-btn" data-name="Panna Cotta Berry" data-price="52000" data-img="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- BEVERAGE -->
+    <section class="category-block" data-category="beverage" id="beverage">
+      <div class="category-header">
+        <div class="category-title-wrap">
+          <span class="category-number">04 /</span>
+          <h2 class="category-title">Beverage</h2>
+        </div>
+        <span class="category-count">3 items</span>
+      </div>
+      <div class="menu-grid">
+        <article class="menu-card" data-name="espresso martini" data-category="beverage">
+          <div class="card-img">
+            <span class="card-badge">Signature</span>
+            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80" alt="Espresso Martini" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Espresso Martini</h3>
+            <p class="card-desc">Vodka, espresso, coffee liqueur, dan gula aren.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 95.000</span>
+              <button class="add-btn" data-name="Espresso Martini" data-price="95000" data-img="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="matcha latte" data-category="beverage">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=600&q=80" alt="Matcha Latte" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Premium Matcha Latte</h3>
+            <p class="card-desc">Matcha Uji dengan susu oat creamy dan madu.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 48.000</span>
+              <button class="add-btn" data-name="Premium Matcha Latte" data-price="48000" data-img="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card" data-name="red wine" data-category="beverage">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80" alt="Red Wine" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Red Wine Glass</h3>
+            <p class="card-desc">Pilihan red wine premium dari Bordeaux, Prancis.</p>
+            <div class="card-footer">
+              <span class="card-price"><small>Harga</small>Rp 135.000</span>
+              <button class="add-btn" data-name="Red Wine Glass" data-price="135000" data-img="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80" aria-label="Tambah ke keranjang">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="footer-brand">MAISON DORÉE</div>
+    <div class="footer-tag">Fine Dining · Jakarta</div>
+    <p class="footer-meta">
+      &copy; 2025 <span>Maison Dorée</span>. Semua hak dilindungi. · Harga dapat berubah sewaktu-waktu.
+    </p>
+  </footer>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Keranjang pesanan">
+    <div class="cart-header">
+      <div class="cart-title">
+        Keranjang Pesanan
+        <small id="cartSubtitle">Belum ada item</small>
+      </div>
+      <button class="close-btn" id="closeCart" aria-label="Tutup">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty" id="cartEmpty">
+        <svg viewBox="0 0 24 24">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <p>Keranjang Anda masih kosong.<br />Yuk pilih menu favorit Anda!</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-value" id="cartTotal">Rp 0</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn" disabled>
+        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2z"/></svg>
+        Pesan via WhatsApp
+      </button>
+    </div>
+  </aside>
+
+  <script>
+    /* ============================================
+       TEMA
+       ============================================ */
+    (function initTheme() {
+      const themeToggle = document.getElementById("themeToggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const root = document.documentElement;
+      const STORAGE_KEY = "maison-theme";
+
+      const moonPath = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+      const sunPath = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+
+      function getSystemTheme() {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+
+      function applyTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        themeIcon.innerHTML = theme === "dark" ? moonPath : sunPath;
+        let meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = theme === "dark" ? "#0d0d0d" : "#f7f3ec";
+      }
+
+      const saved = localStorage.getItem(STORAGE_KEY);
+      applyTheme(saved || getSystemTheme());
+
+      themeToggle.addEventListener("click", () => {
+        const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        applyTheme(next);
+        localStorage.setItem(STORAGE_KEY, next);
+      });
+
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+          applyTheme(e.matches ? "dark" : "light");
+        }
+      });
+    })();
+
+    /* ============================================
+       TOP BAR HIDE ON SCROLL DOWN
+       ============================================ */
+    (function topBarScroll() {
+      const topBar = document.getElementById("topBar");
+      let lastY = 0;
+      window.addEventListener("scroll", () => {
+        const y = window.scrollY;
+        if (y > lastY && y > 120) {
+          topBar.classList.add("hidden");
+        } else {
+          topBar.classList.remove("hidden");
+        }
+        lastY = y;
+      });
+    })();
+
+    /* ============================================
+       VIEW TOGGLE (Grid / List)
+       ============================================ */
+    const viewBtns = document.querySelectorAll(".view-btn");
+    let currentView = "grid";
+
+    viewBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        viewBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentView = btn.dataset.view;
+        renderView();
+      });
+    });
+
+    function renderView() {
+      document.querySelectorAll(".menu-grid").forEach(grid => {
+        grid.style.display = currentView === "list" ? "none" : "";
+      });
+      document.querySelectorAll(".menu-list").forEach(list => {
+        list.style.display = currentView === "grid" ? "none" : "";
+      });
+      // Build list view jika belum
+      if (currentView === "list") {
+        document.querySelectorAll(".category-block").forEach(block => {
+          if (!block.querySelector(".menu-list")) {
+            const grid = block.querySelector(".menu-grid");
+            const list = document.createElement("div");
+            list.className = "menu-list";
+            grid.querySelectorAll(".menu-card").forEach(card => {
+              const name = card.querySelector(".card-title").textContent;
+              const desc = card.querySelector(".card-desc").textContent;
+              const price = card.querySelector(".card-price").textContent.replace("Harga", "").trim();
+              const img = card.querySelector(".card-img img").src;
+              const priceVal = card.querySelector(".add-btn").dataset.price;
+              const imgVal = card.querySelector(".add-btn").dataset.img;
+
+              const item = document.createElement("div");
+              item.className = "list-item";
+              item.dataset.name = card.dataset.name;
+              item.dataset.category = card.dataset.category;
+              item.innerHTML = `
+                <div class="list-img"><img src="${img}" alt="${name}" loading="lazy"></div>
+                <div class="list-info">
+                  <h4>${name}</h4>
+                  <p>${desc}</p>
+                </div>
+                <div class="list-action">
+                  <span class="list-price">${price}</span>
+                  <button class="list-add-btn" data-name="${name}" data-price="${priceVal}" data-img="${imgVal}">+ Tambah</button>
+                </div>
+              `;
+              list.appendChild(item);
+            });
+            grid.parentNode.insertBefore(list, grid.nextSibling);
+          }
+        });
+      }
+    }
+
+    /* ============================================
+       FILTER KATEGORI
+       ============================================ */
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.dataset.filter;
+        document.querySelectorAll(".category-block").forEach(block => {
+          block.style.display = (filter === "all" || block.dataset.category === filter) ? "" : "none";
+        });
+      });
+    });
+
+    /* ============================================
+       SEARCH
+       ============================================ */
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      document.querySelectorAll(".category-block").forEach(block => {
+        let hasVisible = false;
+        const items = block.querySelectorAll(".menu-card, .list-item");
+        items.forEach(item => {
+          const name = (item.dataset.name || "").toLowerCase();
+          const match = name.includes(query);
+          item.style.display = match ? "" : "none";
+          if (match) hasVisible = true;
+        });
+        block.style.display = hasVisible ? "" : "none";
+      });
+    });
+
+    /* ============================================
+       CART
+       ============================================ */
+    const cart = [];
+    const cartBtn = document.getElementById("cartBtn");
+    const cartDrawer = document.getElementById("cartDrawer");
+    const cartOverlay = document.getElementById("cartOverlay");
+    const closeCart = document.getElementById("closeCart");
+    const cartItems = document.getElementById("cartItems");
+    const cartEmpty = document.getElementById("cartEmpty");
+    const cartCount = document.getElementById("cartCount");
+    const cartTotal = document.getElementById("cartTotal");
+    const cartSubtitle = document.getElementById("cartSubtitle");
+    const checkoutBtn = document.getElementById("checkoutBtn");
+
+    function openCart() {
+      cartDrawer.classList.add("open");
+      cartOverlay.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeCartDrawer() {
+      cartDrawer.classList.remove("open");
+      cartOverlay.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    cartBtn.addEventListener("click", openCart);
+    closeCart.addEventListener("click", closeCartDrawer);
+    cartOverlay.addEventListener("click", closeCartDrawer);
+
+    // Delegasi klik tambah item (grid & list)
+    document.addEventListener("click", (e) => {
+      const addBtn = e.target.closest(".add-btn, .list-add-btn");
+      if (addBtn) {
+        e.preventDefault();
+        addToCart(addBtn.dataset.name, parseInt(addBtn.dataset.price), addBtn.dataset.img);
+      }
+    });
+
+    function addToCart(name, price, img) {
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ name, price, img, qty: 1 });
+      }
+      updateCart();
+      // Animation badge
+      cartCount.classList.add("active");
+      cartCount.style.transform = "scale(1.4)";
+      setTimeout(() => { cartCount.style.transform = ""; }, 200);
+    }
+
+    function updateCart() {
+      const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
+      const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+      // Badge
+      cartCount.textContent = totalQty;
+      cartCount.classList.toggle("active", totalQty > 0);
+
+      // Subtitle
+      cartSubtitle.textContent = totalQty > 0 ? `${totalQty} item dipilih` : "Belum ada item";
+
+      // Total
+      cartTotal.textContent = "Rp " + totalPrice.toLocaleString("id-ID");
+
+      // Checkout button
+      checkoutBtn.disabled = cart.length === 0;
+
+      // Render items
+      cartItems.querySelectorAll(".cart-item").forEach(el => el.remove());
+
+      if (cart.length === 0) {
+        cartEmpty.style.display = "";
+      } else {
+        cartEmpty.style.display = "none";
+        cart.forEach((item, idx) => {
+          const el = document.createElement("div");
+          el.className = "cart-item";
+          el.innerHTML = `
+            <div class="cart-item-img"><img src="${item.img}" alt="${item.name}"></div>
+            <div class="cart-item-info">
+              <h5>${item.name}</h5>
+              <div class="cart-item-price">Rp ${item.price.toLocaleString("id-ID")}</div>
+            </div>
+            <div class="qty-control">
+              <button class="qty-btn" data-action="minus" data-idx="${idx}">−</button>
+              <span class="qty-num">${item.qty}</span>
+              <button class="qty-btn" data-action="plus" data-idx="${idx}">+</button>
+            </div>
+          `;
+          cartItems.appendChild(el);
+        });
+      }
+    }
+
+    // Qty buttons
+    cartItems.addEventListener("click", (e) => {
+      const btn = e.target.closest(".qty-btn");
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.idx);
+      const action = btn.dataset.action;
+      if (action === "plus") {
+        cart[idx].qty++;
+      } else if (action === "minus") {
+        cart[idx].qty--;
+        if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      }
+      updateCart();
+    });
+
+    /* ============================================
+       CHECKOUT VIA WHATSAPP
+       ============================================ */
+    checkoutBtn.addEventListener("click", () => {
+      if (cart.length === 0) return;
+      const phone = "6281234567890"; // GANTI dengan nomor WA Anda
+      let message = "Halo Maison Dorée,%0A%0ASaya ingin memesan:%0A";
+      cart.forEach((item, i) => {
+        message += `${i + 1}. ${item.name} x${item.qty} = Rp ${(item.price * item.qty).toLocaleString("id-ID")}%0A`;
+      });
+      const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+      message += `%0ATotal: *Rp ${total.toLocaleString("id-ID")}*%0A%0ATerima kasih!`;
+      window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+    });
+
+    /* ============================================
+       PRINT
+       ============================================ */
+    document.getElementById("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+
+    /* ============================================
+       MOBILE MENU (Scroll ke kategori)
+       ============================================ */
+    document.getElementById("mobileToggle").addEventListener("click", () => {
+      const first = document.getElementById("appetizer");
+      if (first) first.scrollIntoView({ behavior: "smooth" });
+    });
+
+    /* ============================================
+       SMOOTH SCROLL NAV
+       ============================================ */
+    document.querySelectorAll('.nav-links a, .brand').forEach(link => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        if (href && href.startsWith("#") && href.length > 1) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const offset = 90;
+            const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top, behavior: "smooth" });
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
